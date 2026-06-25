@@ -1,21 +1,27 @@
 # PROGRAM 1: ANALISIS TEKS
 # FUNGSI 
 hitung <- function(teks) {
-  # Cek valid: harus ada titik dan tidak boleh kosong
+# Validasi: teks kosong atau tidak ada titik (escape karena regex)
   if (teks == "" || !grepl("\\.", teks)) {
     cat("STATUS: TIDAK VALID\n")
     return()
   }
-  # Jika valid, hitung kata dan kalimat
-  kata <- unlist(strsplit(teks, " "))
-  jml_kata <- length(kata)
+  
+# Pecah teks berdasarkan spasi, unlist() karena strsplit() menghasilkan list
+  kata <- unlist(strsplit(teks, "\\s+"))
+  kata <- kata[kata != ""]  # Hapus elemen kosong
+  jumlah_kata <- length(kata)   # Hitung jumlah kata
+  
+# Pecah teks berdasarkan titik (escape), lalu ubah ke vektor
   kalimat <- unlist(strsplit(teks, "\\."))
-  kalimat <- kalimat[kalimat != ""]
-  jml_kalimat <- length(kalimat)
-  cat("STATUS: VALID\n")
-  cat("Jumlah kata:", jml_kata, "\n")
-  cat("Jumlah kalimat:", jml_kalimat, "\n")
-  cat("Teks tersebut memuat",jml_kalimat,"kalimat dan memuat",jml_kata,"kata.\n")
+  kalimat <- kalimat[kalimat != ""]  # Hapus elemen kosong (akibat titik di akhir)
+  jumlah_kalimat <- length(kalimat)  # Hitung jumlah kalimat
+
+# Tampilkan hasil
+  cat("STATUS : VALID","\n")
+  cat("Jumlah kata:", jumlah_kata, "\n")
+  cat("Jumlah kalimat:", jumlah_kalimat, "\n")
+  cat("Teks tersebut memuat",jumlah_kalimat,"kalimat dan memuat",jumlah_kata,"kata.\n")
 }
 # PENGUJIAN
 #SKENARIO 1 
@@ -30,6 +36,6 @@ hitung(teks2)
 teks3 <-"Hari ini cuaca sangat cerah dan matahari bersinar terang angin bertiup sepoi-sepoi membuat suasana menjadi lebih nyaman untuk beraktivitas di luar ruangan"
 hitung(teks3)
 
-#Skenario 4
+#SKENARIO 4
 teks4 <- "Menjaga kesehatan tubuh sangat penting bagi setiap orang. Olahraga secara teratur dapat meningkatkan sistem kekebalan tubuh. Selain itu, konsumsi makanan bergizi juga berperan besar dalam menjaga kesehatan. Tidur yang cukup setiap hari juga tidak kalah pentingnya."
-hitung(teks4) 
+hitung(teks4)
